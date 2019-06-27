@@ -53,3 +53,20 @@ def get_by_uuid(uuid, dictionary):
         if response['uuid'] == uuid:
             return response
     return None
+
+
+def count_by_guess(dictionary, correctly=False):
+    """
+    Count the number of correctly/incorrectly guessed images for a dataset
+
+    :param dictionary:
+    :param correctly:
+    :return:
+    """
+    guessed = 0
+    for response in dictionary:
+        for answer in response['answers']:
+            if answer['guessed_correctly'] == correctly:
+                guessed = guessed + 1
+
+    return guessed
