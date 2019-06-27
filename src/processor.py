@@ -1,6 +1,8 @@
 import csv
 import numpy as np
+import warnings
 import matplotlib.pyplot as plt
+from matplotlib2tikz import save as tikz_save
 
 
 def process_csv(csv_path, image='image_id_', stage='image_stage_', fake='image_fake_', answer='image_answer_'):
@@ -163,8 +165,17 @@ def boxplot(data_dict, metric, header, filename):
         data.append([guess_data[metric] for guess_data in data_point])
 
     fig, ax = plt.subplots()
-    ax.boxplot(data)
+    ax.boxplot(data, widths=0.75)
     ax.set_title(header)
     ax.set_ylabel(metric.capitalize())
     ax.set_xticklabels([data_points['label'] for data_points in data_dict])
-    plt.savefig('../output/{}'.format(filename))
+
+    if filename.endswith('.tex'):
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            tikz_save('../output/{}'.format(filename))
+    else:
+        plt.savefig('../output/{}'.format(filename))
+
+
+

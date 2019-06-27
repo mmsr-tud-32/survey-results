@@ -1,0 +1,92 @@
+% This file was created by matplotlib2tikz v0.7.4.
+\begin{tikzpicture}
+
+\definecolor{color0}{rgb}{1,0.498039215686275,0.0549019607843137}
+
+\begin{axis}[
+tick align=outside,
+tick pos=left,
+title={Percentages guessed incorrectly},
+x grid style={white!69.01960784313725!black},
+xmin=0.5, xmax=2.5,
+xtick style={color=black},
+xtick={1,2},
+xticklabels={1 second,10 seconds},
+y grid style={white!69.01960784313725!black},
+ylabel={Percentage},
+ymin=-2.5, ymax=52.5,
+ytick style={color=black}
+]
+\addplot [black]
+table {%
+0.625 6.67
+1.375 6.67
+1.375 20
+0.625 20
+0.625 6.67
+};
+\addplot [black]
+table {%
+1 6.67
+1 0
+};
+\addplot [black]
+table {%
+1 20
+1 33.33
+};
+\addplot [black]
+table {%
+0.8125 0
+1.1875 0
+};
+\addplot [black]
+table {%
+0.8125 33.33
+1.1875 33.33
+};
+\addplot [black, mark=*, mark size=3, mark options={solid,fill opacity=0}, only marks]
+table {%
+1 46.67
+};
+\addplot [black]
+table {%
+1.625 0
+2.375 0
+2.375 20
+1.625 20
+1.625 0
+};
+\addplot [black]
+table {%
+2 0
+2 0
+};
+\addplot [black]
+table {%
+2 20
+2 50
+};
+\addplot [black]
+table {%
+1.8125 0
+2.1875 0
+};
+\addplot [black]
+table {%
+1.8125 50
+2.1875 50
+};
+\addplot [color0]
+table {%
+0.625 13.33
+1.375 13.33
+};
+\addplot [color0]
+table {%
+1.625 10
+2.375 10
+};
+\end{axis}
+
+\end{tikzpicture}

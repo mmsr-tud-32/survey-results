@@ -2,6 +2,7 @@ import argparse
 from processor import process_csv, calculate_percentages, calculate_percentages_user, boxplot
 
 
+
 def get_arguments():
     parser = argparse.ArgumentParser()
 
@@ -32,5 +33,5 @@ if __name__ == "__main__":
         ],
         'percentage',
         'Percentages guessed incorrectly',
-        'percentage_boxplot.png'
+        'percentage_boxplot.tex'
     )
