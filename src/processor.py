@@ -1,5 +1,6 @@
 import csv
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def process_csv(csv_path, image='image_id_', stage='image_stage_', fake='image_fake_', answer='image_answer_'):
@@ -101,8 +102,17 @@ def calculate_percentages(dictionary, name="Datapoint", should_print=True):
 
 
 def calculate_percentages_user(dictionary, name="Datapoint", should_print=True):
+    """
+    Create a dictionary with the percentages for every user.
+
+    :param dictionary:
+    :param name:
+    :param should_print:
+    :return:
+    """
     lowest_percentage = 100
     highest_percentage = 0
+    responses = []
     for response in dictionary:
         incorrect = count_by_guess_user(response, correctly=False)
         correct = count_by_guess_user(response, correctly=True)
@@ -119,5 +129,42 @@ def calculate_percentages_user(dictionary, name="Datapoint", should_print=True):
             print('Correctly guessed: {}'.format(correct))
             print('Percentage incorrect: {}\n'.format(percentage))
 
-    print('Highest percentage: {}'.format(highest_percentage))
-    print('Lowest percentage: {}'.format(lowest_percentage))
+        responses.append({
+            'uuid': response['uuid'],
+            'age': response['age'],
+            'incorrect': incorrect,
+            'correct': correct,
+            'percentage': percentage,
+        })
+
+    if should_print:
+        print('Highest percentage: {}'.format(highest_percentage))
+        print('Lowest percentage: {}'.format(lowest_percentage))
+
+    return {
+        'highest_percentage': highest_percentage,
+        'lowest_percentage': lowest_percentage,
+        'responses': responses
+    }
+
+
+def boxplot(data_dict, metric, header, filename):
+    """
+    Generate a boxplot for the given data.
+
+    :param data_dict:
+    :param metric:
+    :param header:
+    :param filename:
+    :return:
+    """
+    data = []
+    for data_point in [data_points['dataset'] for data_points in data_dict]:
+        data.append([guess_data[metric] for guess_data in data_point])
+
+    fig, ax = plt.subplots()
+    ax.boxplot(data)
+    ax.set_title(header)
+    ax.set_ylabel(metric.capitalize())
+    ax.set_xticklabels([data_points['label'] for data_points in data_dict])
+    plt.savefig('../output/{}'.format(filename))

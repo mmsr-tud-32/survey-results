@@ -1,5 +1,5 @@
 import argparse
-from processor import process_csv, get_by_uuid, count_by_guess, calculate_percentages, calculate_percentages_user
+from processor import process_csv, calculate_percentages, calculate_percentages_user, boxplot
 
 
 def get_arguments():
@@ -15,7 +15,22 @@ if __name__ == "__main__":
     args = vars(get_arguments())
     short_results = process_csv(args['short_csv'])
     long_results = process_csv(args['long_csv'])
-    calculate_percentages(long_results, 'Long')
-    calculate_percentages(short_results, 'Short')
-    calculate_percentages_user(long_results, 'Long')
-    # calculate_percentages_user(short_results, 'Short')
+    percentage_long = calculate_percentages(long_results, 'Long', False)
+    percentage_short = calculate_percentages(short_results, 'Short', False)
+    data_long = calculate_percentages_user(long_results, 'Long', False)
+    data_short = calculate_percentages_user(short_results, 'short', False)
+    boxplot(
+        [
+            {
+                'dataset': data_short['responses'],
+                'label': '1 second',
+            },
+            {
+                'dataset': data_long['responses'],
+                'label': '10 seconds',
+            }
+        ],
+        'percentage',
+        'Percentages guessed incorrectly',
+        'percentage_boxplot.png'
+    )
