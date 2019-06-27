@@ -73,7 +73,7 @@ def count_by_guess(dictionary, correctly=False):
     return guessed
 
 
-def calculate_percentages(dictionary, name, should_print=True):
+def calculate_percentages(dictionary, name="Datapoint", should_print=True):
     """
     Calculate the percentages for a dictionary, and print the output if requested
     :param dictionary:
