@@ -66,9 +66,16 @@ def count_by_guess(dictionary, correctly=False):
     """
     guessed = 0
     for response in dictionary:
-        for answer in response['answers']:
-            if answer['guessed_correctly'] == correctly:
-                guessed = guessed + 1
+        guessed = guessed + count_by_guess_user(response, correctly)
+
+    return guessed
+
+
+def count_by_guess_user(response, correctly=False):
+    guessed = 0
+    for answer in response['answers']:
+        if answer['guessed_correctly'] == correctly:
+            guessed = guessed + 1
 
     return guessed
 
@@ -91,3 +98,26 @@ def calculate_percentages(dictionary, name="Datapoint", should_print=True):
         print('Percentage incorrect: {}\n'.format(percentage))
 
     return {'percentage_incorrect': percentage, 'incorrect': incorrect, 'correct': correct}
+
+
+def calculate_percentages_user(dictionary, name="Datapoint", should_print=True):
+    lowest_percentage = 100
+    highest_percentage = 0
+    for response in dictionary:
+        incorrect = count_by_guess_user(response, correctly=False)
+        correct = count_by_guess_user(response, correctly=True)
+        percentage = np.around((incorrect / (correct + incorrect)) * 100, 2)
+        if percentage < lowest_percentage:
+            lowest_percentage = percentage
+
+        if percentage > highest_percentage:
+            highest_percentage = percentage
+
+        if should_print:
+            print('Results for {} for {}'.format(name, response['uuid']))
+            print('Incorrectly guessed: {}'.format(incorrect))
+            print('Correctly guessed: {}'.format(correct))
+            print('Percentage incorrect: {}\n'.format(percentage))
+
+    print('Highest percentage: {}'.format(highest_percentage))
+    print('Lowest percentage: {}'.format(lowest_percentage))

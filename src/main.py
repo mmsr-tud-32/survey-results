@@ -1,5 +1,5 @@
 import argparse
-from processor import process_csv, get_by_uuid, count_by_guess, calculate_percentages
+from processor import process_csv, get_by_uuid, count_by_guess, calculate_percentages, calculate_percentages_user
 
 
 def get_arguments():
@@ -17,4 +17,5 @@ if __name__ == "__main__":
     long_results = process_csv(args['long_csv'])
     calculate_percentages(long_results, 'Long')
     calculate_percentages(short_results, 'Short')
-
+    calculate_percentages_user(long_results, 'Long')
+    # calculate_percentages_user(short_results, 'Short')
