@@ -31,8 +31,9 @@ def process_csv(csv_path, image='image_id_', stage='image_stage_', fake='image_f
                 row_answers.append(image_answer)
 
             row_result = {
-                'name': row['name'],
                 'uuid': row['uuid'],
+                'name': row['name'],
+                'age': row['age'],
                 'feedback': row['feedback'],
                 'answers': row_answers,
             }
@@ -49,6 +50,6 @@ def get_by_uuid(uuid, dictionary):
     :return:
     """
     for response in dictionary:
-        if response['uuid'] == uuid:c
+        if response['uuid'] == uuid:
             return response
     return None
