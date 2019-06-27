@@ -2,7 +2,6 @@ import argparse
 from processor import process_csv, calculate_percentages, calculate_percentages_user, boxplot
 
 
-
 def get_arguments():
     parser = argparse.ArgumentParser()
 
