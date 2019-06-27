@@ -1,4 +1,5 @@
 import csv
+import numpy as np
 
 
 def process_csv(csv_path, image='image_id_', stage='image_stage_', fake='image_fake_', answer='image_answer_'):
@@ -70,3 +71,23 @@ def count_by_guess(dictionary, correctly=False):
                 guessed = guessed + 1
 
     return guessed
+
+
+def calculate_percentages(dictionary, name, should_print=True):
+    """
+    Calculate the percentages for a dictionary, and print the output if requested
+    :param dictionary:
+    :param name:
+    :param should_print:
+    :return:
+    """
+    incorrect = count_by_guess(dictionary, correctly=False)
+    correct = count_by_guess(dictionary, correctly=True)
+    percentage = np.around((incorrect / (correct + incorrect)) * 100, 2)
+    if should_print:
+        print('Results for {}'.format(name))
+        print('Incorrectly guessed: {}'.format(incorrect))
+        print('Correctly guessed: {}'.format(correct))
+        print('Percentage incorrect: {}\n'.format(percentage))
+
+    return {'percentage_incorrect': percentage, 'incorrect': incorrect, 'correct': correct}
