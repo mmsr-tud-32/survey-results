@@ -28,8 +28,8 @@ def process_csv(csv_path, image='image_id_', stage='image_stage_', fake='image_f
                 image_answer = {
                     'image': row[image + answered_id],
                     'stage': row[stage + answered_id],
-                    'fake': True if row[fake + answered_id] == 1 else False,
-                    'guess': True if row[answer + answered_id] == 1 else False,
+                    'fake': True if row[fake + answered_id] == '1' else False,
+                    'guess': True if row[answer + answered_id] == '1' else False,
                     'guessed_correctly': row[fake + answered_id] == row[answer + answered_id]
                 }
                 row_answers.append(image_answer)
@@ -118,7 +118,11 @@ def calculate_percentages_user(dictionary, name="Datapoint", should_print=True):
     for response in dictionary:
         incorrect = count_by_guess_user(response, correctly=False)
         correct = count_by_guess_user(response, correctly=True)
-        percentage = np.around((incorrect / (correct + incorrect)) * 100, 2)
+        if correct + incorrect == 0:
+            percentage = lowest_percentage
+        else:
+            percentage = np.around((incorrect / (correct + incorrect)) * 100, 2)
+
         if percentage < lowest_percentage:
             lowest_percentage = percentage
 
